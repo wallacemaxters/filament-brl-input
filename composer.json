@@ -1,0 +1,29 @@
+{
+    "name": "wallacemaxters/filament-brl-input",
+    "version": "1.0.0",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "WallaceMaxters\\FilamentBrlInput\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wallacemaxters",
+            "email": "wallacemaxters@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "filament/filament": "^3.0",
+        "illuminate/support": "^10.45|^11.0|^12.0"
+    },
+    "require-dev": {
+        "rector/rector": "^2.1"
+    },
+    "scripts": {
+        "refactor" : [
+            "@php vendor/bin/rector --clear-cache process src/"
+        ]
+    }
+}

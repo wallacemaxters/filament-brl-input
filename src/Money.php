@@ -2,7 +2,6 @@
 
 namespace WallaceMaxters\FilamentBrlInput;
 
-use Filament\Forms\Components\Field;
 use Filament\Forms\Components\TextInput;
 
 class Money extends TextInput
@@ -13,12 +12,12 @@ class Money extends TextInput
             ->maxLength(20)
             ->extraAlpineAttributes($this->onInput(...))
             ->inputMode('decimal')
-            ->formatStateUsing(fn ($state) => $this->hydrateCurrency($state))
-            ->dehydrateStateUsing(fn ($state) => $this->dehydrateCurrency($state))
+            ->formatStateUsing(fn ($state): string => $this->hydrateCurrency($state))
+            ->dehydrateStateUsing(fn ($state): float => $this->dehydrateCurrency($state))
             ->prefix('R$');
     }
 
-    protected function onInput()
+    protected function onInput(): array
     {
         return [
             'x-on:input' => <<<'JS'
@@ -41,7 +40,7 @@ class Money extends TextInput
         return is_numeric($result) ? $result / 100 : 0;
     }
 
-    public function hydrateCurrency($value): string
+    public function hydrateCurrency(string|float $value): string
     {
         $rounded = round((float) $value, 2, PHP_ROUND_HALF_DOWN);
 

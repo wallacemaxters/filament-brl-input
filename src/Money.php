@@ -2,6 +2,7 @@
 
 namespace WallaceMaxters\FilamentBrlInput;
 
+use Illuminate\Support\Js;
 use Filament\Forms\Components\TextInput;
 
 class Money extends TextInput
@@ -20,12 +21,18 @@ class Money extends TextInput
     protected function onInput(): array
     {
         return [
+            'x-data'     => json_encode(['key' => $this->getStatePath()]),
             'x-on:input' => <<<'JS'
+
                 let valor = parseInt($el.value.replace(/\D/g, '')) || 0;
+
                 valor = (valor / 100).toFixed(2);
-                $el.value = valor
+
+                valor = valor
                     .replace('.', ',')
                     .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+                $wire.$set(key, valor, false);
             JS,
         ];
     }

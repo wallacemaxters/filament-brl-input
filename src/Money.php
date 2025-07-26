@@ -40,7 +40,7 @@ class Money extends TextInput
         return is_numeric($result) ? $result / 100 : 0;
     }
 
-    public function hydrateCurrency(string|float $value): string
+    public function hydrateCurrency($value): string
     {
         $rounded = round((float) $value, 2, PHP_ROUND_HALF_DOWN);
 

@@ -11,7 +11,7 @@ class Money extends TextInput
     {
         $this
             ->maxLength(20)
-            ->extraAlpineAttributes($this->onInput(...))
+            ->extraInputAttributes($this->onInput(...), true)
             ->inputMode('decimal')
             ->formatStateUsing(fn ($state): string => $this->hydrateCurrency($state))
             ->dehydrateStateUsing(fn ($state): float => $this->dehydrateCurrency($state))
@@ -21,18 +21,19 @@ class Money extends TextInput
     protected function onInput(): array
     {
         return [
-            'x-data'     => json_encode(['key' => $this->getStatePath()]),
             'x-on:input' => <<<'JS'
+            (event) => {
 
-                let valor = parseInt($el.value.replace(/\D/g, '')) || 0;
+                let value = parseInt(event.target.value.replace(/\D/g, '')) || 0;
 
-                valor = (valor / 100).toFixed(2);
+                value = (value / 100).toFixed(2);
 
-                valor = valor
+                value = value
                     .replace('.', ',')
                     .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-                $wire.$set(key, valor, false);
+                    
+                $set($statePath, value, true, false);
+            }
             JS,
         ];
     }

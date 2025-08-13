@@ -14,8 +14,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "filament/filament": "^3.0",
-        "illuminate/support": "^10.45|^11.0|^12.0"
+        "filament/filament": "^4.0",
+        "illuminate/support": "^11.28|^12.0"
     },
     "require-dev": {
         "rector/rector": "^2.1"
